@@ -17,12 +17,18 @@ class CreateDatabukusTable extends Migration
             $table->id();
             $table->foreignId('id_buku');
             $table->string('judul_buku');
-            $table->string('penerbit');
             $table->string('pengarang');
-            $table->integer('jumlah_hal');
-            $table->integer('no_rak');
+            $table->string('bahasa');
+            $table->string('penerjemah');
+            $table->string('penerbit');
+            $table->string('tempat_terbit');
+            $table->string('cetakan');
+            $table->string('tahun_terbit');
+            $table->integer('kode_lemari');
+            $table->integer('jumlah_buku');
             $table->string('ISBN');
-            $table->integer('tahun_terbit');
+            $table->string('klasifikasi');
+            $table->string('kode_buku');
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class BukuController extends Controller
      */
     public function index()
     {
-        $databuku = databuku::all();
+        $databuku = databuku::latest()->paginate(4);
         $title = "Data Buku";
         return view('admin.databuku', compact('title', 'databuku'));
     }
@@ -46,17 +46,23 @@ class BukuController extends Controller
             'numeric'  => 'Kolom :attribute Harus Angka',
         ];
         $validasi = $request->validate([
-            'judul_buku'    => 'required|unique:databukus|max:255',
-            'penerbit'      => 'required',
+            'judul_buku'    => 'required',
             'pengarang'     => 'required',
-            'jumlah_hal'    => 'required',
-            'no_rak'        => 'required',
+            'bahasa'        => 'required',
+            'penerjemah'    => 'required',
+            'penerbit'      => 'required',
+            'tempat_terbit' => 'required',
+            'cetakan'       => 'required',
+            'tahun_terbit'  => 'required',
+            'kode_lemari'   => 'required',
+            'jumlah_buku'   => 'required',
             'ISBN'          => 'required',
-            'tahun_terbit'  => 'required'
+            'klasifikasi'   => 'required',
+            'kode_buku'     => 'required'
         ], $messege);
         $validasi['id_buku'] = Auth::id();
         databuku::create($validasi);
-        return redirect('databuku')->with('success', 'Data berhasil tersimpan');
+        return redirect('databuku')->with('success', 'Task Created Successfully!');
     }
 
     /**
@@ -67,7 +73,9 @@ class BukuController extends Controller
      */
     public function show($id)
     {
-        //
+        $databuku = databuku::find($id);
+        $title = "Detail Buku";
+        return view('admin.detailbuku', compact('databuku', 'title'));
     }
 
     /**
@@ -99,12 +107,18 @@ class BukuController extends Controller
         ];
         $validasi = $request->validate([
             'judul_buku'    => 'required',
-            'penerbit'      => 'required',
             'pengarang'     => 'required',
-            'jumlah_hal'    => 'required',
-            'no_rak'        => 'required',
+            'bahasa'        => 'required',
+            'penerjemah'    => 'required',
+            'penerbit'      => 'required',
+            'tempat_terbit' => 'required',
+            'cetakan'       => 'required',
+            'tahun_terbit'  => 'required',
+            'kode_lemari'   => 'required',
+            'jumlah_buku'   => 'required',
             'ISBN'          => 'required',
-            'tahun_terbit'  => 'required'
+            'klasifikasi'   => 'required',
+            'kode_buku'     => 'required'
         ], $messege);
         $validasi['id_buku'] = Auth::id();
         databuku::where('id', $id)->update($validasi);
@@ -123,6 +137,6 @@ class BukuController extends Controller
         if ($databuku != null) {
             databuku::where('id', $id)->delete();
         }
-        return redirect('databuku')->with('success', 'Data berhasil tersimpan');
+        return redirect('databuku')->with('success', 'Data berhasil diHapus');
     }
 }
