@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\cobaController;
 use App\Http\Controllers\DatabukuController;
 use App\Http\Controllers\Pinjambuku;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\KembaliController;
 use App\Http\Controllers\PeminjamanController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +36,10 @@ Route::resource('databuku', BukuController::class);
 Route::resource('anggotaperpus', AnggotaController::class);
 
 Route::resource('peminjamanbuku', PeminjamanController::class);
+
+Route::resource('coba', cobaController::class);
+
+Route::get('/pengembalian', [KembaliController::class, 'pengembalian'])->name('pengembalian')->middleware(['auth:sanctum', 'verified']);
 
 Route::get('/pinjam', [Pinjambuku::class, 'index'])->name('pinjam')->middleware(['auth:sanctum', 'verified']);
 

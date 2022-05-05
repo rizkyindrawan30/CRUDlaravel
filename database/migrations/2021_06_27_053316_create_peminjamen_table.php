@@ -18,8 +18,12 @@ class CreatePeminjamenTable extends Migration
             $table->foreignId('id_peminjaman');
             $table->date('tanggal_pinjam');
             $table->date('tanggal_kembali');
-            $table->integer('id_buku');
-            $table->integer('id_agt');
+            $table->string('kode_buku');
+            $table->string('judul_buku');
+            $table->integer('NIS');
+            $table->string('nama');
+            $table->string('kelas');
+            $table->string('jurusan');
             $table->timestamps();
         });
     }

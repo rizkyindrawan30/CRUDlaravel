@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\anggota;
-use App\Models\databuku;
 use App\Models\peminjaman;
-use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,10 +15,7 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        $peminjaman = peminjaman::join('databukus', 'peminjamen.id_buku', '=', 'databukus.id')
-            ->join('anggotas', 'peminjamen.id_agt', '=', 'anggotas.id')
-            ->join('kelas', 'anggotas.kelas', '=', 'kelas.id_kls')
-            ->paginate(5);
+        $peminjaman = peminjaman::latest()->paginate(30);
         $title = "Data Peminjaman Buku";
         return view('admin.pinjam.peminjamanbuku', compact('peminjaman', 'title'));
     }
@@ -34,11 +28,8 @@ class PeminjamanController extends Controller
     public function create()
     {
         $peminjaman = peminjaman::all();
-        $databuku = databuku::all();
-        $anggota = anggota::join('kelas', 'anggotas.kelas', '=', 'kelas.id_kls')->get();
-        $kelas = Kelas::all();
         $title = "Peminjaman Buku";
-        return view('admin.pinjam.inputpeminjamanbuku', compact('title', 'peminjaman', 'databuku', 'anggota', 'kelas'));
+        return view('admin.pinjam.inputpeminjamanbuku', compact('title', 'peminjaman'));
     }
 
     /**
@@ -57,13 +48,17 @@ class PeminjamanController extends Controller
         ];
         $validasi = $request->validate([
             'tanggal_pinjam'    => 'required',
-            'tanggal_kembali'   => 'required',
-            'id_buku'           => 'required',
-            'id_agt'            => 'required'
+            'tanggal_kembali'   => '',
+            'kode_buku'         => 'required',
+            'judul_buku'        => '',
+            'NIS'               => 'required',
+            'nama'              => 'required',
+            'kelas'             => 'required',
+            'jurusan'           => 'required'
         ], $messege);
         $validasi['id_peminjaman'] = Auth::id();
         peminjaman::create($validasi);
-        return redirect('peminjamanbuku')->with('success', 'Data Peminjaman Berhasil di Tambah!');
+        return redirect('peminjamanbuku1')->with('success', 'Data Peminjaman Berhasil di Tambah!');
     }
 
     /**
@@ -85,12 +80,9 @@ class PeminjamanController extends Controller
      */
     public function edit($id)
     {
-        $peminjaman = peminjaman::all();
-        $databuku = databuku::all();
-        $anggota = anggota::all();
-        $kelas = Kelas::all();
+        $peminjamanbuku = peminjaman::find($id);
         $title = "Peminjaman Buku";
-        return view('admin.pinjam.inputpeminjamanbuku', compact('title', 'peminjaman', 'databuku', 'anggota', 'kelas'));
+        return view('admin.pinjam.updatepeminjamanbuku', compact('title', 'peminjamanbuku'));
     }
 
     /**
@@ -110,12 +102,16 @@ class PeminjamanController extends Controller
         $validasi = $request->validate([
             'tanggal_pinjam'    => 'required',
             'tanggal_kembali'   => 'required',
-            'id_buku'           => 'required',
-            'id_agt'            => 'required'
+            'kode_buku'         => 'required',
+            'judul_buku'        => 'required',
+            'NIS'               => 'required',
+            'nama'              => 'required',
+            'kelas'             => 'required',
+            'jurusan'           => 'required'
         ], $messege);
-        $validasi = Auth::id();
+        $validasi['id_peminjaman'] = Auth::id();
         peminjaman::where('id', $id)->update($validasi);
-        return redirect('peminjamanbuku')->with('success', 'Data Peminjaman Berhasil Di edit');
+        return redirect('pengembalian')->with('success', 'Data Peminjaman Berhasil di Edit');
     }
 
     /**

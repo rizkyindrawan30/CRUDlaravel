@@ -24,12 +24,12 @@
                             <input type="date" name="tanggal_pinjam" value="{{(isset ($peminjamanbuku))?$peminjamanbuku->tanggal_pinjam:old('tanggal_pinjam')}}" id="tanggal_pinjam" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="Masukkan Tanggal Pinjam">
                         </div>
                     </div>
-                    <div class="col-span-3 sm:col-span-2" hidden>
+                    <div class="col-span-3 sm:col-span-2">
                         <label for="tanggal_kembali" class="block text-sm font-medium text-gray-700">
                             Tanggal Kembali
                         </label>
                         <div class="mt-1 flex rounded-md shadow-sm">
-                            <input type="date" name="tanggal_kembali" value="<?php echo date("Y-m-d"); ?>" id="tanggal_kembali" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="Masukkan Tanggal Kembali">
+                            <input type="date" name="tanggal_kembali" value="{{(isset ($peminjamanbuku))?$peminjamanbuku->tanggal_kembali:old('tanggal_kembali')}}" id="tanggal_kembali" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="Masukkan Tanggal Kembali">
                         </div>
                     </div>
                     <div class="col-span-3 sm:col-span-2">

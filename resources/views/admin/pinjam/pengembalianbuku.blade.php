@@ -21,6 +21,9 @@
                     Tanggal Pinjam
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tanggal Kembali
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Kode Buku
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -54,6 +57,9 @@
                     {{$item->tanggal_pinjam}}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{$item->tanggal_kembali}}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{$item->kode_buku}}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -85,8 +91,5 @@
             <!-- More items... -->
         </tbody>
     </table>
-    <div class="">
-        {{ $peminjaman->links() }}
-    </div>
 
 </x-template-layout>
